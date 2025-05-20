@@ -11,3 +11,10 @@ dependencies = [
     "pandas>=2.2.3",
     "pre-commit>=4.2.0",
 ]
+
+[tool.uv]
+package = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ph*"]
