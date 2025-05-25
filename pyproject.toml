@@ -1,0 +1,20 @@
+[project]
+name = "pub-highlights"
+version = "0.1.0"
+description = "Get research publication highlights from the past few days to stay caught up"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "click>=8.2.0",
+    "feedparser>=6.0.11",
+    "jupyter>=1.1.1",
+    "pandas>=2.2.3",
+    "pre-commit>=4.2.0",
+]
+
+[tool.uv]
+package = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ph*"]
