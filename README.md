@@ -3,12 +3,13 @@
 New developments and publications arrive daily, and it can be difficult to keep up with everything - not only finding the time to read papers but making sure you're not missing any in the first place! This projet is an attempt to lighten the load a bit, by providing a summary of papers published in the last ~week in a given field. ✨
 
 #### Quick links
-- [🚀 Setup](#🚀-setup)
+- [🚀 Setup](#setup-section)
 - [▶️ Usage](#▶️-usage)
 - [💡 Troubleshooting and Known Limitations](#💡-troubleshooting-and-known-limitations)
 - [📜 Changelog](CHANGELOG.md)
 - [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
+<a name="setup-section"></a>
 ## 🚀 Setup
 
 ### Requirements
@@ -30,7 +31,7 @@ uv install
 ```
 
 
-## ▶️  Usage
+## ▶️ Usage
 
 **Pull over your LLM of choice**
 
