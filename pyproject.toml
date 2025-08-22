@@ -16,6 +16,9 @@ dependencies = [
     "pypdf>=5.5.0",
 ]
 
+[project.scripts]
+pubhighlights = "ph.get_pub_highlights:get_pub_highlights"
+
 [tool.uv]
 package = true
 
