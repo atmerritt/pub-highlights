@@ -210,7 +210,7 @@ def generate_N_summaries(
     default="latest",
     help="Output path for summary Markdown pages",
 )
-def summarize_abstracts(
+def get_pub_highlights(
     search_term: str,
     window_days: int = 7,
     max_results: int = 100,
@@ -247,4 +247,4 @@ def summarize_abstracts(
 
 
 if __name__ == "__main__":
-    summarize_abstracts()
+    get_pub_highlights()
