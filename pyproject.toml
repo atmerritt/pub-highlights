@@ -8,8 +8,12 @@ dependencies = [
     "click>=8.2.0",
     "feedparser>=6.0.11",
     "jupyter>=1.1.1",
+    "langchain-core>=0.3.61",
+    "langchain-ollama>=0.3.3",
     "pandas>=2.2.3",
     "pre-commit>=4.2.0",
+    "pylatexenc>=2.10",
+    "pypdf>=5.5.0",
 ]
 
 [tool.uv]
@@ -18,3 +22,21 @@ package = true
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["ph*"]
+
+[tool.mypy]
+# ignore missing type hints for all untyped libraries (optional)
+ignore_missing_imports = true
+strict = true
+
+[[tool.mypy.overrides]]
+module = "feedparser"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "click"
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 88 # Default
+select = ["E", "F", "W", "I", "B"]
+# ignore = ["E501"]
