@@ -5,7 +5,7 @@ New developments and publications arrive daily, and it can be difficult to keep 
 #### Quick links
 - [🚀 Setup](#setup-section)
 - [▶️ Usage](#usage-section)
-- [💡 Troubleshooting and Known Limitations](#troubleshooting-section)
+- [💡 Troubleshooting and Known Limitations](#troubleshoot-section)
 - [📜 Changelog](CHANGELOG.md)
 - [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
