@@ -1,13 +1,14 @@
-from langchain_ollama import ChatOllama
-from langchain_core.prompts import ChatPromptTemplate
-from pylatexenc.latex2text import LatexNodes2Text
-from pathlib import Path
-from typing import cast
-from ph import retrieval
-
 import logging
 import textwrap
+from pathlib import Path
+from typing import cast
+
 import click
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_ollama import ChatOllama
+from pylatexenc.latex2text import LatexNodes2Text
+
+from ph import retrieval
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(format="%(asctime)s %(levelname)s:%(message)s", level=logging.INFO)
@@ -80,15 +81,15 @@ def generate_N_summaries(
             (
                 "system",
                 """You are an expert astronomer and researcher.
-                
+
                 Your task is to help your fellow researchers keep up with literature, by summarising papers or abstracts in their field, {field}, in two parts.
 
                 ---
-                
+
                 Part 1: Paper descriptions
                 For each of the following papers, you are given the paper title, paper author, paper link, and paper abstract text.
                 Based on the paper abstract, please write a description of each paper, approximately a paragraph long. 
-                
+
                 At minimum, the descriptions should include the following information about the paper:
                 - the goal of the research
                 - the data and methods used
@@ -96,9 +97,9 @@ def generate_N_summaries(
                 - remaining open questions or caveats
 
                 Please write in the third person, for example "The authors show that.." rather than "We show that.. "
-                
+
                 ---
-                
+
                 Part 2: High-level summary
                 Please create a high-level summary, a couple paragraphs long, of everything that happened in the field of {field}, based on these papers.
                 First, identify the key common themes, trends, or contradictions across the papers. For each key point, write a sentence or two and then
@@ -133,7 +134,7 @@ def generate_N_summaries(
                 Here are the papers to work with:
                 {input}
 
-                
+
                 """,
             ),
             ("human", "{input}"),
