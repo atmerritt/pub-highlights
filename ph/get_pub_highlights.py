@@ -205,10 +205,10 @@ def generate_N_summaries(
     help="Number of abstracts to summarize (None = all)",
 )
 @click.option(
-    "--out-path",
+    "--out-dir",
     type=Path,
     default="latest",
-    help="Output path for summary Markdown pages",
+    help="Output directory to store the summary Markdown pages",
 )
 def get_pub_highlights(
     search_term: str,
@@ -216,7 +216,7 @@ def get_pub_highlights(
     max_results: int = 100,
     model_name: str = "llama3.2:3b",
     n_summaries: int = 3,
-    out_path: Path = Path("latest"),
+    out_dir: Path = Path("latest"),
 ) -> None:
     # Read in and preprocess abstracts
     logger.info("Querying the arXiv API for publications...")
@@ -240,7 +240,7 @@ def get_pub_highlights(
     md_text = summary_text + "\n" + summary_table
 
     # Write Markdown file
-    output_filename = f"{out_path}/{search_term.replace(' ', '_')}.md"
+    output_filename = f"{out_dir}/{search_term.replace(' ', '_')}.md"
     logger.info(f"Writing results to file: {output_filename}")
     with open(output_filename, "w") as f:
         f.write(md_text)
