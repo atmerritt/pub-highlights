@@ -1,6 +1,6 @@
 from urllib.request import urlopen
 from datetime import datetime, timedelta
-
+from typing import cast
 import feedparser
 
 
@@ -31,15 +31,16 @@ def construct_date_range(window_days: int = 3) -> str:
 
 
 def construct_arxiv_query(
-    search_query: list[str], window_days: int = 3, max_results: int = 100
+    search_query: str, window_days: int = 3, max_results: int = 100
 ) -> str:
     """Construct the query for the arXiv API."""
     api_request_url = "http://export.arxiv.org/api/query?search_query="
 
     # Update query with search terms
-    for i, query in enumerate(search_query):
+    search_query_terms = search_query.split(" ")
+    for i, query in enumerate(search_query_terms):
         query_str = f"all:{query.replace(' ', '+')}"
-        if i < len(search_query) - 1:
+        if i < len(search_query_terms) - 1:
             query_str += "+AND+"
         api_request_url += query_str
 
@@ -54,12 +55,12 @@ def construct_arxiv_query(
 
 
 def call_arxiv_api(
-    search_query: list[str], window_days: int = 3, max_results: int = 100
-) -> feedparser.util.FeedParserDict:
+    search_query: str, window_days: int = 3, max_results: int = 100
+) -> list[dict[str, str]]:
     """
     Call the arXiv API.
 
-    The search query is a list of strings to search for. This can be a single word (e.g. "PSF"),
+    The search query is the string to search for. This can be a single word (e.g. "PSF"),
     or a phrase (e.g. "low surface brightness"). It can also be one or more subject classification,
     e.g. astro-ph.CO or astro-ph.GA or cs.CV.
 
@@ -77,21 +78,30 @@ def call_arxiv_api(
     with urlopen(api_request_url) as url:
         xml_results = url.read()
 
-    # Parse results
-    pub_dict = feedparser.parse(xml_results)
-    return pub_dict
+    # Parse results and focus on the "entries" field
+    parsed_pubs = feedparser.parse(xml_results)
+    return cast(list[dict[str, str]], parsed_pubs["entries"])
 
 
 def clean_results(publist: feedparser.util.FeedParserDict) -> list[dict[str, str]]:
+    """Clean up the metadata.
+
+    * Select which fields to keep, renaming a few as needed
+    * Shorten the author list to only the first author
+    * Fix some formatting issues in the paper title
+    """
     clean_pub_details: list[dict[str, str]] = []
-    for pub in publist["entries"]:
+    for pub in publist:
+        pub = dict(pub)
         d = {
+            "title": pub["title"].replace("\n", "").replace("  ", " "),
+            "author": pub["authors"][0]["name"],
             "link": pub["link"],
-            "first_author": pub["authors"][0]["name"],
-            "title": pub["title"],
+            "text": pub["summary"],
             "category": ", ".join([t["term"] for t in pub["tags"]]),
-            "summary": pub["summary"],
+            "published": pub["published"],
+            "updated": pub["updated"],
         }
         clean_pub_details.append(d)
 
-    return clean_pub_details
+    return sorted(clean_pub_details, key=lambda d: d["updated"])[::-1]
