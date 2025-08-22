@@ -26,7 +26,7 @@ def collect_publications(
 
 
 def generate_table(pub_list: list[dict[str, str]], max_width: int = 40) -> str:
-    """Create a Markdown table to show all queried papers, regardless of summarization."""
+    """Create a Markdown table to show all queried papers."""
     table = textwrap.dedent(
         """\
     # Complete publication list
@@ -82,40 +82,50 @@ def generate_N_summaries(
                 "system",
                 """You are an expert astronomer and researcher.
 
-                Your task is to help your fellow researchers keep up with literature, by summarising papers or abstracts in their field, {field}, in two parts.
+                Your task is to help your fellow researchers keep up with literature, by
+                summarising papers or abstracts in their field, {field}, in two parts.
 
                 ---
 
                 Part 1: Paper descriptions
-                For each of the following papers, you are given the paper title, paper author, paper link, and paper abstract text.
-                Based on the paper abstract, please write a description of each paper, approximately a paragraph long. 
+                For each of the following papers, you are given the paper title, paper
+                author, paper link, and paper abstract text.
+                Based on the paper abstract, please write a description of each paper,
+                approximately a paragraph long.
 
-                At minimum, the descriptions should include the following information about the paper:
+                At minimum, the descriptions should include the following information
+                about the paper:
                 - the goal of the research
                 - the data and methods used
                 - any key findings
                 - remaining open questions or caveats
 
-                Please write in the third person, for example "The authors show that.." rather than "We show that.. "
+                Please write in the third person, for example "The authors show that.."
+                rather than "We show that.. "
 
                 ---
 
                 Part 2: High-level summary
-                Please create a high-level summary, a couple paragraphs long, of everything that happened in the field of {field}, based on these papers.
-                First, identify the key common themes, trends, or contradictions across the papers. For each key point, write a sentence or two and then
-                directly follow it with a markdown-formatted citation to the paper(s) that support it using the paper author and link.
-                For example, you might write: "One study shows that ... ([paper author](paper link))."
+                Please create a high-level summary, a couple paragraphs long, of
+                everything that happened in the field of {field}, based on these papers.
+                First, identify the key common themes, trends, or contradictions across
+                the papers. For each key point, write a sentence or two and then
+                directly follow it with a markdown-formatted citation to the paper(s)
+                that support it using the paper author and link. For example, you
+                might write: "One study shows that ... ([paper author](paper link))."
 
                 ---
 
-                This is scientific research, so if you do not know the answer to any of the above, DO NOT make up information.
+                This is scientific research, so if you do not know the answer to any of
+                the above, DO NOT make up information.
                 Stick to what you can learn from the text.
 
                 Please format all output in Markdown.
 
                 ---
 
-                Here is an example of what the overall output should look like in Markdown if we had 2 papers. 
+                Here is an example of what the overall output should look like in
+                Markdown if we had 2 papers:
 
                 # Pub highlights
                 ### paper 1 title ([paper 1 author](paper 1 link))
